@@ -14,12 +14,15 @@ import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap'
 
 // Import your components
 import Login from './components/Auth/LoginComponent.vue';
 import Register from './components/Auth/RegisterComponent.vue';
-import BookList from './components/BookList.vue';
-
+import BookList from './components/Content/BookList.vue';
+import ReturnBook from './components/Content/ReturnBook.vue';
+import BorrowBooks from './components/Content/BorrowBooks.vue';
 // Create router
 const router = createRouter({
   history: createWebHistory(),
@@ -32,6 +35,19 @@ const router = createRouter({
       component: BookList,
       meta: { requiresAuth: true } // Protect this route
     },
+    {
+        path:'/return-books',
+        name:'ReturnBook',
+        component:ReturnBook,
+    },
+    {
+        path:'/borrow-books/:id',
+        name:'BorrowBooks',
+        component:BorrowBooks,
+        props:true
+    }
+   
+    
     // Add other routes as needed
   ]
 });

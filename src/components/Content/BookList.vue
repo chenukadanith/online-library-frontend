@@ -22,6 +22,15 @@
       :globalFilterFields="['id', 'title', 'description', 'genre', 'price']"
       >
       
+     <div class="text-end mb-3">
+  <button 
+    class="p-button p-component " 
+    @click="navigateToReturnBook"
+    
+  >
+  Return Book
+  </button> 
+</div>
       <template #header>
         <div class="flex justify-end">
           <IconField>
@@ -29,7 +38,10 @@
               <i class="pi pi-search" />
             </InputIcon>
             <InputText v-model="filters['global'].value" placeholder="Global Search" />
+                                 
+
           </IconField>
+
         </div>
       </template>
       
@@ -100,6 +112,16 @@
             placeholder="Search by price" />
         </template>
       </Column>
+     <Column header="Action" style="min-width: 10rem">
+  <template #body="{ data }">
+    <button 
+      @click="borrowBook(data.id)" 
+      class="btn btn-primary btn-sm"> 
+      Borrow
+    </button>
+  </template>
+</Column>
+
     </DataTable>
   </div>
 </template>
@@ -112,12 +134,14 @@ import { FilterMatchMode } from '@primevue/core/api';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
-import '../assets/BookList.css'; // Import your custom styles
+import '../../assets/BookList.css'; 
+import { useRouter } from 'vue-router';
 
 
-// Reactive state variables
+// Reactive state variables 
 const books = ref([]);
 const loading = ref(true);
+const router=useRouter();
 const error = ref(null);
 const globalFilter = ref(''); // Separate ref for global filter
 
@@ -130,6 +154,23 @@ const filters = ref({
   genre: { value: null, matchMode: FilterMatchMode.CONTAINS },
   price: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
+
+
+const navigateToReturnBook=()=>{
+  router.push('/return-books')
+}
+const borrowBook=(id)=>{
+  console.log(id);
+  router.push({
+    name:'BorrowBooks',
+    params:{
+      id:id
+    }
+  }
+    
+)
+
+}
 
 // Function to fetch books from the API using native fetch
 const fetchBooks = async () => {
