@@ -1,77 +1,99 @@
 <template>
   <div class="auth-container">
     <div class="auth-form">
-      <h2>Register</h2>
-      
+      <h2 class="form-title">Create Your Account</h2>
+
       <form @submit.prevent="handleRegister">
         <div class="form-group">
           <label for="name">Name</label>
-          <input 
-            type="text" 
-            id="name" 
-            v-model="form.name" 
-            required
-            placeholder="Enter your name"
-          >
+          <IconField iconPosition="left">
+            <InputIcon class="pi pi-user" />
+            <InputText
+              type="text"
+              id="name"
+              v-model="form.name"
+              required
+              placeholder="Your full name"
+              aria-label="Name"
+            />
+          </IconField>
         </div>
-        
+
         <div class="form-group">
           <label for="email">Email</label>
-          <input 
-            type="email" 
-            id="email" 
-            v-model="form.email" 
-            required
-            placeholder="Enter your email"
-          >
+          <IconField iconPosition="left">
+            <InputIcon class="pi pi-envelope" />
+            <InputText
+              type="email"
+              id="email"
+              v-model="form.email"
+              required
+              placeholder="Your email address"
+              aria-label="Email"
+            />
+          </IconField>
         </div>
-        
+
         <div class="form-group">
           <label for="password">Password</label>
-          <input 
-            type="password" 
-            id="password" 
-            v-model="form.password" 
-            required
-            placeholder="Enter your password"
-          >
+          <IconField iconPosition="left">
+            <InputIcon class="pi pi-lock" />
+            <InputText
+              type="password"
+              id="password"
+              v-model="form.password"
+              required
+              placeholder="Create your password"
+              aria-label="Password"
+            />
+          </IconField>
         </div>
-        
+
         <div class="form-group">
           <label for="password_confirmation">Confirm Password</label>
-          <input 
-            type="password" 
-            id="password_confirmation" 
-            v-model="form.password_confirmation" 
-            required
-            placeholder="Confirm your password"
-          >
+          <IconField iconPosition="left">
+            <InputIcon class="pi pi-check-circle" />
+            <InputText
+              type="password"
+              id="password_confirmation"
+              v-model="form.password_confirmation"
+              required
+              placeholder="Re-enter your password"
+              aria-label="Confirm Password"
+            />
+          </IconField>
         </div>
-        
-        <button type="submit" class="submit-btn" :disabled="loading">
-          <span v-if="loading">Creating account...</span>
+
+        <button type="submit" class="submit-btn" :disabled="authStore.loading">
+          <span v-if="authStore.loading">Creating account...</span>
           <span v-else>Register</span>
         </button>
       </form>
-      
+
       <p class="toggle-auth">
         Already have an account? <router-link to="/login">Login here</router-link>
       </p>
-      
-      <div v-if="error" class="error-message">{{ error }}</div>
-      <div v-if="message" class="success-message">{{ message }}</div>
+
+      <div v-if="authStore.error" class="error-message p-alert-danger">
+        <i class="pi pi-exclamation-triangle"></i> {{ authStore.error }}
+      </div>
+      <div v-if="authStore.message" class="success-message p-alert-success">
+        <i class="pi pi-check-circle"></i> {{ authStore.message }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import InputText from 'primevue/inputtext'; // Use PrimeVue InputText
+import IconField from 'primevue/iconfield'; // Use PrimeVue IconField
+import InputIcon from 'primevue/inputicon'; // Use PrimeVue InputIcon
+import { useAuthStore } from '@/stores/auth';
 
 const router = useRouter();
-const loading = ref(false);
-const error = ref('');
-const message = ref('');
+const authStore = useAuthStore();
 
 const form = reactive({
   name: '',
@@ -81,118 +103,171 @@ const form = reactive({
 });
 
 const handleRegister = async () => {
-  loading.value = true;
-  error.value = '';
-  message.value = '';
-  
-  try {
-    const response = await fetch('http://localhost:8000/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(form)
-    });
+  authStore.error = null;
+  authStore.message = null;
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Registration failed');
-    }
-
-    message.value = 'Registration successful! Redirecting to login...';
+  const success = await authStore.register(form);
+  if (success) {
+    // authStore.message is set by the store to 'Registration successful! Please login.'
+    // The message is also cleared after 3 seconds by the store.
+    // We can then redirect to login after a brief moment.
     setTimeout(() => {
       router.push('/login');
-    }, 1500);
-    
-  } catch (err) {
-    error.value = err.message || 'An error occurred during registration';
-  } finally {
-    loading.value = false;
+    }, 1500); // Redirect after 1.5 seconds, giving time for message to appear
   }
 };
 </script>
 
 <style scoped>
-/* Same styles as in the combined component */
+/* These styles are shared with the Login component for consistency.
+   Consider moving them to a common CSS file (e.g., `src/assets/styles/auth.css`)
+   and importing them into both Login.vue and Register.vue for better organization. */
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-color: #f5f5f5;
+  padding: 1rem;
 }
 
 .auth-form {
   background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  animation: fadeInScale 0.5s ease-out;
 }
 
-h2 {
+.form-title {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   color: #333;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
   color: #555;
+  font-weight: 600;
 }
 
-input {
+.p-inputtext {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
   font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.p-inputtext:focus {
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 0.2rem rgba(74, 108, 247, 0.25);
+  outline: none;
+}
+
+.p-icon-field .p-inputtext {
+  padding-left: 2.5rem; /* Adjust padding for icon */
+}
+
+.p-input-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  transform: translateY(-50%);
+  color: #6c757d;
 }
 
 .submit-btn {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.9rem;
   background-color: #4a6cf7;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
   cursor: pointer;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  font-weight: 600;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .submit-btn:hover {
   background-color: #3a5bd9;
+  transform: translateY(-2px);
 }
 
 .submit-btn:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+  transform: translateY(0);
 }
 
 .toggle-auth {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.toggle-auth a {
   color: #4a6cf7;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
 }
 
-.error-message {
-  color: #e74c3c;
-  margin-top: 1rem;
-  text-align: center;
+.toggle-auth a:hover {
+  color: #3a5bd9;
+  text-decoration: underline;
 }
 
+.error-message,
 .success-message {
-  color: #2ecc71;
-  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-top: 1.2rem;
   text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.p-alert-danger {
+  background-color: #fce7e7;
+  color: #c43c3c;
+  border: 1px solid #f8c0c0;
+}
+
+.p-alert-success {
+  background-color: #e6f6ee;
+  color: #28a745;
+  border: 1px solid #b7e4c7;
+}
+
+.p-alert-danger .pi,
+.p-alert-success .pi {
+  margin-right: 0.5rem;
+}
+
+/* Animations */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 </style>
