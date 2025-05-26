@@ -115,14 +115,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useAuthStore } from '@/stores/auth'; // Import auth store
+import { useAuthStore } from '@/stores/auth'; 
 
-// PrimeVue components
 import InputText from 'primevue/inputtext';
 import Calendar from 'primevue/calendar';
 import Button from 'primevue/button';
 import Message from 'primevue/message';
-import Card from 'primevue/card'; // Explicitly importing PrimeVue Card
+import Card from 'primevue/card'; 
 
 const props = defineProps({
   id: {
@@ -132,7 +131,7 @@ const props = defineProps({
 
 const router = useRouter();
 const route = useRoute();
-const authStore = useAuthStore(); // Initialize auth store
+const authStore = useAuthStore(); 
 
 const borrowData = ref({
   book_id: '',
@@ -149,8 +148,7 @@ onMounted(() => {
   if (props.id) {
     borrowData.value.book_id = props.id;
   }
-  // Optionally, pre-fill borrower_name if user info is available from authStore
-  if (authStore.user && authStore.user.name) { // Assuming authStore has a user object with a name
+  if (authStore.user && authStore.user.name) { 
     borrowData.value.borrower_name = authStore.user.name;
   }
   console.log('Borrow book component mounted, Book ID:', borrowData.value.book_id);
@@ -176,7 +174,7 @@ const handleBorrow = async () => {
 
   try {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-    const token = authStore.token; // Get token from auth store
+    const token = authStore.token; 
 
     if (!token) {
       router.push('/login');
@@ -195,7 +193,7 @@ const handleBorrow = async () => {
 
     if (response.status === 401) {
       console.warn('Authentication token expired or invalid. Logging out.');
-      authStore.logout(); // Use auth store's logout which handles redirection
+      authStore.logout(); 
       error.value = 'Your session has expired. Please log in again.';
       return;
     }
@@ -232,57 +230,54 @@ const goBack = () => {
 </script>
 
 <style scoped>
-/* Main container for centering */
 .borrow-book-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%); /* Lighter, fresher gradient */
+  background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%); 
   padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* PrimeVue Card Component Styling */
 .borrow-card {
   width: 100%;
-  max-width: 480px; /* More controlled max-width for the card */
-  border-radius: 15px; /* Slightly less rounded than before, sleek */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); /* Refined shadow */
+  max-width: 480px; 
+  border-radius: 15px; 
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); 
   overflow: hidden;
   background-color: #ffffff;
 }
 
 .custom-card-header {
-  background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%); /* Strong green gradient */
-  padding: 1.5rem; /* Adjusted padding */
-  font-size: 1.6rem; /* Slightly smaller title */
+  background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%); 
+  padding: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
-  border-top-left-radius: 15px; /* Match card border-radius */
-  border-top-right-radius: 15px; /* Match card border-radius */
+  border-top-left-radius: 15px; 
+  border-top-right-radius: 15px; 
 }
 
 .p-card-title {
-  font-size: 1.8rem; /* Adjusted title size within header */
+  font-size: 1.8rem; 
 }
 
-/* PrimeVue Input Fields */
 .p-field {
-  margin-bottom: 1.5rem; /* Standard spacing for fields */
+  margin-bottom: 1.5rem; 
 }
 
 .p-label {
   color: #34495e;
-  font-size: 0.95rem; /* Slightly smaller label font */
+  font-size: 0.95rem;
   display: block;
   margin-bottom: 0.5rem;
 }
 
 .p-inputtext {
-  border-radius: 8px; /* Slightly less rounded than previous, more standard */
-  border: 1px solid #ced4da; /* Standard PrimeVue border color */
+  border-radius: 8px;
+  border: 1px solid #ced4da; 
   padding: 0.75rem 1rem;
-  font-size: 0.95rem; /* Adjusted input text size */
+  font-size: 0.95rem; 
   transition: all 0.2s ease-in-out;
 }
 
@@ -292,33 +287,31 @@ const goBack = () => {
   outline: none;
 }
 
-.p-inputtext-sm { /* Specific for smaller inputs like Book ID */
+.p-inputtext-sm { 
   padding: 0.6rem 0.9rem;
   font-size: 0.9rem;
 }
 
 
-/* PrimeVue Calendar specific adjustments */
 .p-calendar .p-inputtext {
-  padding-right: 2.2rem; /* Space for the calendar icon */
+  padding-right: 2.2rem; 
 }
 
 .p-calendar .p-button {
   background-color: transparent !important;
   border: none !important;
   color: #4CAF50 !important;
-  transition: none; /* Prevent hover transition on calendar button itself */
+  transition: none; 
 }
 
 .p-calendar .p-button:hover {
   background-color: rgba(76, 175, 80, 0.1) !important;
 }
 
-/* PrimeVue Button Adjustments */
-.p-button.p-button-md { /* Targeting the medium size button */
-  padding: 0.7rem 1.4rem; /* Smaller padding for a more compact button */
-  font-size: 0.95rem; /* Smaller font size */
-  border-radius: 8px; /* Matching input fields */
+.p-button.p-button-md { 
+  padding: 0.7rem 1.4rem;
+  font-size: 0.95rem; 
+  border-radius: 8px; 
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -332,8 +325,8 @@ const goBack = () => {
 
 .custom-submit-btn:hover {
   background: linear-gradient(135deg, #388E3C 0%, #2E7D32 100%) !important;
-  transform: translateY(-1px); /* More subtle lift */
-  box-shadow: 0 3px 8px rgba(76, 175, 80, 0.25); /* Subtle shadow */
+  transform: translateY(-1px); 
+  box-shadow: 0 3px 8px rgba(76, 175, 80, 0.25); 
 }
 
 .custom-cancel-btn {
@@ -347,50 +340,45 @@ const goBack = () => {
   box-shadow: 0 3px 8px rgba(108, 117, 125, 0.25);
 }
 
-/* PrimeVue Message Component */
 .p-message {
   border-radius: 8px;
-  padding: 0.8rem 1.2rem; /* Smaller padding for alerts */
-  font-size: 0.9rem; /* Smaller font size for alerts */
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08); /* Lighter shadow for alerts */
-}
+  padding: 0.8rem 1.2rem; 
+  font-size: 0.9rem; 
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08); 
 
 .p-message.p-message-error {
-  background-color: #ffe0e0; /* Softer red */
-  color: #d32f2f; /* Standard material red */
+  background-color: #ffe0e0; 
+  color: #d32f2f; 
   border: 1px solid #ef9a9a;
 }
 
 .p-message.p-message-success {
-  background-color: #e0f2f7; /* Softer blue-green */
-  color: #00796b; /* Standard material teal */
+  background-color: #e0f2f7; 
+  color: #00796b; 
   border: 1px solid #80cbc4;
 }
 
 .p-message .p-message-icon {
-  font-size: 1rem; /* Smaller icon size in alerts */
+  font-size: 1rem; 
   margin-right: 0.6rem;
 }
 
-/* General typography adjustments */
 .p-formtext {
-  font-size: 0.8rem; /* Smaller form text */
+  font-size: 0.8rem; 
   color: #888;
 }
 
-/* Icons within labels */
 .p-label .pi {
-  color: #4CAF50; /* Green icons for labels */
+  color: #4CAF50; 
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .borrow-book-container {
     padding: 1rem;
   }
 
   .borrow-card {
-    max-width: 95%; /* Allow card to be a bit wider on small screens */
+    max-width: 95%; 
   }
 
   .custom-card-header {
@@ -403,13 +391,13 @@ const goBack = () => {
   }
 
   .p-button.p-button-md {
-    width: 100%; /* Full width buttons on small screens */
-    margin-bottom: 0.75rem; /* Space between stacked buttons */
+    width: 100%; 
+    margin-bottom: 0.75rem;
   }
 
   .d-flex.justify-content-center.gap-3.mt-4 {
-    flex-direction: column; /* Stack buttons vertically */
-    gap: 0; /* Remove gap when stacked */
+    flex-direction: column; 
+    gap: 0; 
   }
-}
+}}
 </style>

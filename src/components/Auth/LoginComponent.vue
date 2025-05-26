@@ -1,37 +1,29 @@
 <template>
   <div class="auth-container">
     <div class="auth-form">
-      <h2 class="form-title">Welcome Back!</h2>
+      <h2>Login</h2>
 
       <form @submit.prevent="handleLogin">
         <div class="form-group">
           <label for="email">Email</label>
-          <IconField iconPosition="left">
-            <InputIcon class="pi pi-envelope" />
-            <InputText
-              type="email"
-              id="email"
-              v-model="form.email"
-              required
-              placeholder="Your email address"
-              aria-label="Email"
-            />
-          </IconField>
+          <InputText
+            type="email"
+            id="email"
+            v-model="form.email"
+            required
+            placeholder="Enter your email"
+          />
         </div>
 
         <div class="form-group">
           <label for="password">Password</label>
-          <IconField iconPosition="left">
-            <InputIcon class="pi pi-lock" />
-            <InputText
-              type="password"
-              id="password"
-              v-model="form.password"
-              required
-              placeholder="Your password"
-              aria-label="Password"
-            />
-          </IconField>
+          <InputText
+            type="password"
+            id="password"
+            v-model="form.password"
+            required
+            placeholder="Enter your password"
+          />
         </div>
 
         <button type="submit" class="submit-btn" :disabled="authStore.loading">
@@ -44,12 +36,8 @@
         Don't have an account? <router-link to="/register">Register here</router-link>
       </p>
 
-      <div v-if="authStore.error" class="error-message p-alert-danger">
-        <i class="pi pi-exclamation-triangle"></i> {{ authStore.error }}
-      </div>
-      <div v-if="authStore.message" class="success-message p-alert-success">
-        <i class="pi pi-check-circle"></i> {{ authStore.message }}
-      </div>
+      <div v-if="authStore.error" class="error-message">{{ authStore.error }}</div>
+      <div v-if="authStore.message" class="success-message">{{ authStore.message }}</div>
     </div>
   </div>
 </template>
@@ -57,13 +45,12 @@
 <script setup>
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import InputText from 'primevue/inputtext';
-import IconField from 'primevue/iconfield';
-import InputIcon from 'primevue/inputicon';
+import InputText from 'primevue/inputtext'; 
 import { useAuthStore } from '@/stores/auth';
+import './Auth.css';
 
 const router = useRouter();
-const authStore = useAuthStore();
+const authStore = useAuthStore(); 
 
 const form = reactive({
   email: '',
@@ -82,154 +69,3 @@ const handleLogin = async () => {
 };
 </script>
 
-<style scoped>
-.auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  padding: 1rem;
-}
-
-.auth-form {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 420px;
-  animation: fadeInScale 0.5s ease-out;
-}
-
-.form-title {
-  text-align: center;
-  margin-bottom: 2rem;
-  color: #333;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.6rem;
-  color: #555;
-  font-weight: 600;
-}
-
-.p-inputtext {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.p-inputtext:focus {
-  border-color: #4a6cf7;
-  box-shadow: 0 0 0 0.2rem rgba(74, 108, 247, 0.25);
-  outline: none;
-}
-
-.p-icon-field .p-inputtext {
-  padding-left: 2.5rem; /* Adjust padding for icon */
-}
-
-.p-input-icon {
-  position: absolute;
-  top: 50%;
-  left: 0.8rem;
-  transform: translateY(-50%);
-  color: #6c757d;
-}
-
-
-.submit-btn {
-  width: 100%;
-  padding: 0.9rem;
-  background-color: #4a6cf7;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  margin-top: 1.5rem;
-  font-weight: 600;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.submit-btn:hover {
-  background-color: #3a5bd9;
-  transform: translateY(-2px);
-}
-
-.submit-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-  transform: translateY(0);
-}
-
-.toggle-auth {
-  text-align: center;
-  margin-top: 1.5rem;
-  color: #666;
-  font-size: 0.95rem;
-}
-
-.toggle-auth a {
-  color: #4a6cf7;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
-}
-
-.toggle-auth a:hover {
-  color: #3a5bd9;
-  text-decoration: underline;
-}
-
-.error-message,
-.success-message {
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  margin-top: 1.2rem;
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.p-alert-danger {
-  background-color: #fce7e7;
-  color: #c43c3c;
-  border: 1px solid #f8c0c0;
-}
-
-.p-alert-success {
-  background-color: #e6f6ee;
-  color: #28a745;
-  border: 1px solid #b7e4c7;
-}
-
-.p-alert-danger .pi,
-.p-alert-success .pi {
-  margin-right: 0.5rem;
-}
-
-/* Animations */
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-</style>

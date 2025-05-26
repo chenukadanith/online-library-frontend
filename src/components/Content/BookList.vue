@@ -175,12 +175,7 @@ import { FilterMatchMode } from '@primevue/core/api';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
-import Button from 'primevue/button'; // Explicitly import if needed, though p-button is often global
-
-// No explicit CSS import needed if using Bootstrap for layout and PrimeVue for components,
-// as their CSS should be imported globally in main.js.
-// However, if `BookList.css` contains custom overrides, keep it.
-// import '../../assets/BookList.css'; 
+import Button from 'primevue/button';  
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -213,8 +208,8 @@ const borrowBook = (id) => {
 };
 
 const handleLogout = () => {
-  error.value = null; // Clear local component error
-  authStore.logout(); // Auth store handles logout and redirection
+  error.value = null; 
+  authStore.logout(); 
 };
 
 const fetchBooks = async () => {
@@ -267,7 +262,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Base container and header styling */
 .book-list-container {
   padding: 2rem;
   background-color: #f8f9fa;
@@ -279,7 +273,7 @@ onMounted(() => {
   padding: 1.5rem 2rem;
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  margin-bottom: 3rem; /* More space below header */
+  margin-bottom: 3rem; 
 }
 
 .header-title {
@@ -288,7 +282,6 @@ onMounted(() => {
   font-weight: 700;
 }
 
-/* Logout Button (PrimeVue-style) */
 .logout-btn {
   font-weight: 600;
   border-radius: 25px;
@@ -302,7 +295,6 @@ onMounted(() => {
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-/* Loading & Error States */
 .state-message {
   text-align: center;
   padding: 3rem;
@@ -322,8 +314,7 @@ onMounted(() => {
 }
 
 .error-state .p-alert-danger {
-  background: none; /* Override alert background if already set by alert styles */
-  border: none;
+  background: none; 
   color: inherit;
 }
 
@@ -337,11 +328,10 @@ onMounted(() => {
   font-weight: 600;
 }
 
-/* DataTable Enhancements */
 .p-datatable-gridlines {
   border-radius: 12px;
-  overflow: hidden; /* Ensures rounded corners are visible */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07); /* Deeper shadow */
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07); 
 }
 
 .p-datatable .p-datatable-thead > tr > th {
@@ -359,7 +349,7 @@ onMounted(() => {
 }
 
 .p-datatable .p-datatable-tbody > tr:nth-child(even) {
-  background-color: #f8f9fa; /* Zebra striping */
+  background-color: #f8f9fa; 
 }
 
 .p-tag {
@@ -380,11 +370,10 @@ onMounted(() => {
 }
 
 .text-success-prime {
-  color: #28a745 !important; /* Green from PrimeVue success */
+  color: #28a745 !important; 
   font-weight: 700;
 }
 
-/* PrimeVue Input Overrides (for DataTable filters/search) */
 .p-inputtext {
   border-radius: 8px;
   padding: 0.6rem 0.8rem;
@@ -398,7 +387,7 @@ onMounted(() => {
 }
 
 .p-icon-field .p-inputtext {
-  padding-left: 2.3rem; /* Adjust padding for icon */
+  padding-left: 2.3rem; 
 }
 
 .p-input-icon {
@@ -406,9 +395,8 @@ onMounted(() => {
   color: #888;
 }
 
-/* Return Book Button */
 .return-book-btn {
-  background-color: #17a2b8; /* Info blue */
+  background-color: #17a2b8; 
   border-color: #17a2b8;
   color: white;
   padding: 0.6rem 1.2rem;
@@ -425,9 +413,8 @@ onMounted(() => {
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* Borrow Button */
 .borrow-btn {
-  background-color: #0d6efd; /* Primary blue */
+  background-color: #0d6efd; 
   border-color: #0d6efd;
   color: white;
   padding: 0.5rem 1rem;
@@ -444,7 +431,6 @@ onMounted(() => {
   box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
 
-/* Global Alert Consistency */
 .p-alert-success,
 .p-alert-danger {
   padding: 1rem 1.5rem;
@@ -458,30 +444,26 @@ onMounted(() => {
 }
 
 .p-alert-success {
-  background-color: #d4edda; /* Light green */
-  color: #155724; /* Dark green text */
+  background-color: #d4edda; 
+  color: #155724; 
   border-color: #c3e6cb;
 }
 
 .p-alert-danger {
-  background-color: #f8d7da; /* Light red */
-  color: #721c24; /* Dark red text */
+  background-color: #f8d7da; 
+  color: #721c24; 
   border-color: #f5c6cb;
 }
 
 .p-alert-dismissible .btn-close {
-  padding: 0.5rem 0.5rem; /* Adjust close button for alert */
+  padding: 0.5rem 0.5rem; 
 }
 
-/* Font Awesome replacement with PrimeIcons */
-/* Note: Ensure PrimeIcons CSS is properly imported in your main.js */
-.fa-sign-out-alt { content: "\e963"; font-family: "primeicons"; } /* pi-sign-out */
-.fa-redo { content: "\e955"; font-family: "primeicons"; } /* pi-sync */
-.fa-book-open { content: "\e915"; font-family: "primeicons"; } /* pi-book */
-.fa-hand-holding { content: "\e94f"; font-family: "primeicons"; } /* pi-hand */
-/* The above mapping is for direct CSS replacement, but it's better to use <i class="pi pi-icon-name"></i> directly */
+.fa-sign-out-alt { content: "\e963"; font-family: "primeicons"; }
+.fa-redo { content: "\e955"; font-family: "primeicons"; } 
+.fa-book-open { content: "\e915"; font-family: "primeicons"; } 
+.fa-hand-holding { content: "\e94f"; font-family: "primeicons"; } 
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .app-header {
     flex-direction: column;

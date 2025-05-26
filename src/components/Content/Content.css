@@ -1,0 +1,439 @@
+.return-book-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%); 
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PrimeVue Card Component Styling */
+.return-card {
+  width: 100%;
+  max-width: 480px; /* Consistent max-width with BorrowBooks */
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.custom-card-header {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); /* Vibrant blue gradient for return */
+  padding: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.p-card-title {
+  font-size: 1.8rem;
+}
+
+/* PrimeVue Input Fields (InputText, Calendar, Dropdown, Textarea) */
+.p-field {
+  margin-bottom: 1.5rem;
+}
+
+.p-label {
+  color: #34495e;
+  font-size: 0.95rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.p-inputtext,
+.p-dropdown,
+.p-calendar .p-inputtext,
+.p-textarea {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+  width: 100%; /* Ensure full width */
+}
+
+.p-inputtext:focus,
+.p-dropdown:not(.p-disabled).p-focus,
+.p-calendar.p-focus .p-inputtext,
+.p-textarea:focus {
+  border-color: #2196F3; /* Blue focus border */
+  box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25); /* Blue focus shadow */
+  outline: none;
+}
+
+.p-inputtext-sm {
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+/* Calendar component specific adjustments */
+.p-calendar .p-button {
+  background-color: transparent !important;
+  border: none !important;
+  color: #2196F3 !important; /* Icon color */
+  transition: none;
+}
+
+.p-calendar .p-button:hover {
+  background-color: rgba(33, 150, 243, 0.1) !important;
+}
+
+/* Dropdown component specific adjustments */
+.p-dropdown .p-dropdown-label {
+  padding: 0.75rem 1rem;
+}
+.p-dropdown .p-dropdown-trigger {
+  width: 2.5rem; /* Standard trigger width */
+}
+
+/* PrimeVue Button Adjustments */
+.p-button.p-button-md {
+  padding: 0.7rem 1.4rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.custom-submit-btn {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%) !important; /* Blue gradient for submit */
+  border: none !important;
+}
+
+.custom-submit-btn:hover {
+  background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(33, 150, 243, 0.25);
+}
+
+.custom-cancel-btn {
+  background: linear-gradient(135deg, #6c757d 0%, #545b62 100%) !important;
+  border: none !important;
+}
+
+.custom-cancel-btn:hover {
+  background: linear-gradient(135deg, #545b62 0%, #383d41 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(108, 117, 125, 0.25);
+}
+
+/* PrimeVue Message Component */
+.p-message {
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.9rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+}
+
+.p-message.p-message-error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.p-message.p-message-success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.p-message .p-message-icon {
+  font-size: 1rem;
+  margin-right: 0.6rem;
+}
+
+/* General typography adjustments */
+.p-formtext {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Icons within labels */
+.p-label .pi {
+  color: #2196F3; /* Blue icons for labels */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .return-book-container {
+    padding: 1rem;
+  }
+
+  .return-card {
+    max-width: 95%;
+  }
+
+  .custom-card-header {
+    padding: 1.2rem;
+    font-size: 1.4rem;
+  }
+
+  .p-card-title {
+    font-size: 1.6rem;
+  }
+
+  .p-button.p-button-md {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  .d-flex.justify-content-center.gap-3.mt-4 {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+/* Base container and header styling */
+.book-list-container {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.app-header {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%);
+  padding: 1.5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 3rem; /* More space below header */
+}
+
+.header-title {
+  color: #343a40;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+/* Logout Button (PrimeVue-style) */
+.logout-btn {
+  font-weight: 600;
+  border-radius: 25px;
+  padding: 0.6rem 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Loading & Error States */
+.state-message {
+  text-align: center;
+  padding: 3rem;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.loading-state {
+  color: #0d6efd;
+}
+
+.error-state {
+  color: #dc3545;
+  background-color: #ffe0e0;
+}
+
+.error-state .p-alert-danger {
+  background: none; /* Override alert background if already set by alert styles */
+  border: none;
+  color: inherit;
+}
+
+.pi-2x {
+  font-size: 2.5rem;
+}
+
+.retry-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* DataTable Enhancements */
+.p-datatable-gridlines {
+  border-radius: 12px;
+  overflow: hidden; /* Ensures rounded corners are visible */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07); /* Deeper shadow */
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: #e9ecef;
+  color: #495057;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+.p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #f8f9fa; /* Zebra striping */
+}
+
+.p-tag {
+  font-size: 0.7rem;
+  padding: 0.4em 0.7em;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.p-tag-primary {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.p-tag-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.text-success-prime {
+  color: #28a745 !important; /* Green from PrimeVue success */
+  font-weight: 700;
+}
+
+/* PrimeVue Input Overrides (for DataTable filters/search) */
+.p-inputtext {
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.p-inputtext:focus {
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 0.2rem rgba(74, 108, 247, 0.25);
+  outline: none;
+}
+
+.p-icon-field .p-inputtext {
+  padding-left: 2.3rem; /* Adjust padding for icon */
+}
+
+.p-input-icon {
+  left: 0.7rem;
+  color: #888;
+}
+
+/* Return Book Button */
+.return-book-btn {
+  background-color: #17a2b8; /* Info blue */
+  border-color: #17a2b8;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.return-book-btn:hover {
+  background-color: #138496;
+  border-color: #138496;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Borrow Button */
+.borrow-btn {
+  background-color: #0d6efd; /* Primary blue */
+  border-color: #0d6efd;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.borrow-btn:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* Global Alert Consistency */
+.p-alert-success,
+.p-alert-danger {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.p-alert-success {
+  background-color: #d4edda; /* Light green */
+  color: #155724; /* Dark green text */
+  border-color: #c3e6cb;
+}
+
+.p-alert-danger {
+  background-color: #f8d7da; /* Light red */
+  color: #721c24; /* Dark red text */
+  border-color: #f5c6cb;
+}
+
+.p-alert-dismissible .btn-close {
+  padding: 0.5rem 0.5rem; /* Adjust close button for alert */
+}
+
+/* Font Awesome replacement with PrimeIcons */
+/* Note: Ensure PrimeIcons CSS is properly imported in your main.js */
+.fa-sign-out-alt { content: "\e963"; font-family: "primeicons"; } /* pi-sign-out */
+.fa-redo { content: "\e955"; font-family: "primeicons"; } /* pi-sync */
+.fa-book-open { content: "\e915"; font-family: "primeicons"; } /* pi-book */
+.fa-hand-holding { content: "\e94f"; font-family: "primeicons"; } /* pi-hand */
+/* The above mapping is for direct CSS replacement, but it's better to use <i class="pi pi-icon-name"></i> directly */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+  .header-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  .user-actions {
+    width: 100%;
+    text-align: center;
+  }
+  .logout-btn {
+    width: auto;
+    min-width: unset;
+  }
+  .p-datatable .p-datatable-thead > tr > th,
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.8rem;
+  }
+  .d-flex.justify-content-end.align-items-center.mb-3 {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+  .return-book-btn {
+    width: 100%;
+    margin-bottom: 1rem;
+    margin-right: 0 !important;
+  }
+  .p-datatable-globalfilter-container {
+    width: 100%;
+  }
+}

@@ -1,20 +1,17 @@
-// src/stores/auth.js
 import { defineStore } from 'pinia';
-// ADD 'computed' here
 import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router'; // <--- FIX IS HERE
+import { useRouter } from 'vue-router'; 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref(null); // Stores user data
-  const token = ref(localStorage.getItem('authToken') || null); // Get token from localStorage on init
+  const user = ref(null); 
+  const token = ref(localStorage.getItem('authToken') || null); 
   const loading = ref(false);
   const error = ref(null);
   const message = ref(null);
-  const router = useRouter(); // Use Vue Router to handle navigation
+  const router = useRouter(); 
 
-  // --- Actions ---
 
   async function register(formData) {
     loading.value = true;
@@ -41,10 +38,10 @@ export const useAuthStore = defineStore('auth', () => {
       }
 
       message.value = 'Registration successful! Please login.';
-      return true; // Indicate success
+      return true; 
     } catch (err) {
       error.value = err.message || 'An unexpected error occurred during registration.';
-      return false; // Indicate failure
+      return false; 
     } finally {
       loading.value = false;
     }
@@ -65,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
       });
 
       const data = await response.json();
-      console.log('Auth Store: Response from login:', data); // Log the response data
+      console.log('Auth Store: Response from login:', data); 
 
       if (!response.ok) {
            if (response.status === 422 && data.errors) {
@@ -76,15 +73,14 @@ export const useAuthStore = defineStore('auth', () => {
       }
 
       token.value = data.access_token;
-      console.log('Auth Store: Token after login:', token.value); // Log the token after setting it
+      console.log('Auth Store: Token after login:', token.value); 
       user.value = data.user;
       localStorage.setItem('authToken', data.token);
       
       console.log('Auth Store: Login successful!');
-      console.log('Auth Store: Token after login:', token.value ? 'Set' : 'Not Set'); // Check if token is actually set
-      console.log('Auth Store: Is Authenticated:', computed(() => !!token.value).value); // Directly check computed value   
+      console.log('Auth Store: Token after login:', token.value ? 'Set' : 'Not Set'); 
+      console.log('Auth Store: Is Authenticated:', computed(() => !!token.value).value);  
       
-      // Store token in localStorage
       message.value = 'Login successful!';
       setTimeout(() => {
       message.value = null;
@@ -106,10 +102,9 @@ export const useAuthStore = defineStore('auth', () => {
     setTimeout(() => {
       message.value = null;
     }, 3000); 
-    router.push('/login'); // Redirect to login page after logout
+    router.push('/login'); 
   }
 
-  // Expose properties and methods
   return {
     user,
     token,
@@ -119,6 +114,6 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     login,
     logout,
-    isAuthenticated: computed(() => !!token.value) // This is the line using 'computed'
+    isAuthenticated: computed(() => !!token.value) 
   };
 });

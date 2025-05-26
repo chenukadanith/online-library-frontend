@@ -111,23 +111,22 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'; // Import auth store
+import { useAuthStore } from '@/stores/auth'; 
 
-// PrimeVue components
 import InputText from 'primevue/inputtext';
 import Calendar from 'primevue/calendar';
-import Dropdown from 'primevue/dropdown'; // For the select input
-import Textarea from 'primevue/textarea'; // For the textarea
+import Dropdown from 'primevue/dropdown';
+import Textarea from 'primevue/textarea'; 
 import Button from 'primevue/button';
 import Message from 'primevue/message';
-import Card from 'primevue/card'; // Explicitly importing PrimeVue Card
+import Card from 'primevue/card'; 
 
 const router = useRouter()
-const authStore = useAuthStore(); // Initialize auth store
+const authStore = useAuthStore();
 
 const returnData = ref({
   book_id: null,
-  return_date: new Date().toISOString().split('T')[0], // Default to today
+  return_date: new Date().toISOString().split('T')[0], 
   condition: '',
   notes: ''
 })
@@ -153,14 +152,13 @@ const handleReturn = async () => {
   error.value = null
   success.value = null
 
-  // Format date to 'YYYY-MM-DD' if it's a Date object from Calendar
   const formattedReturnDate = returnData.value.return_date instanceof Date
     ? returnData.value.return_date.toISOString().split('T')[0]
     : returnData.value.return_date;
 
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Assume you have this in .env
-    const token = authStore.token; // Get token from auth store
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+    const token = authStore.token; 
 
     if (!token) {
       router.push('/login');
@@ -170,12 +168,11 @@ const handleReturn = async () => {
 
 
     const response = await fetch(`${API_BASE_URL}/books/return/${returnData.value.book_id}`, {
-       // Changed to POST to a generic endpoint
-      method: 'GET', // Use POST method for returning
+      method: 'GET', 
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': `Bearer ${token}` // Include Authorization header
+        'Authorization': `Bearer ${token}` 
       },  
       
       
@@ -185,7 +182,7 @@ const handleReturn = async () => {
 
     if (response.status === 401) {
       console.warn('Authentication token expired or invalid. Logging out.');
-      authStore.logout(); // Use auth store's logout which handles redirection
+      authStore.logout(); 
       error.value = 'Your session has expired. Please log in again.';
       return;
     }
@@ -199,14 +196,14 @@ const handleReturn = async () => {
     success.value = data.message || 'Book returned successfully!'
 
     setTimeout(() => {
-      // Clear form after success
+      
       returnData.value = {
         book_id: '',
         return_date: new Date().toISOString().split('T')[0],
         condition: '',
         notes: ''
       }
-      // Redirect to books list or previous page
+      
       router.push('/books')
     }, 2000)
 
@@ -219,7 +216,7 @@ const handleReturn = async () => {
 }
 
 const goBack = () => {
-  router.go(-1) // Go back to previous page
+  router.go(-1) 
 }
 
 onMounted(() => {
@@ -228,20 +225,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Main container for centering */
 .return-book-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%); /* Light blue-grey gradient */
+  background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%); 
   padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* PrimeVue Card Component Styling */
 .return-card {
   width: 100%;
-  max-width: 480px; /* Consistent max-width with BorrowBooks */
+  max-width: 480px; 
   border-radius: 15px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
   overflow: hidden;
@@ -249,7 +244,7 @@ onMounted(() => {
 }
 
 .custom-card-header {
-  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); /* Vibrant blue gradient for return */
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); 
   padding: 1.5rem;
   font-size: 1.6rem;
   font-weight: 700;
@@ -262,7 +257,6 @@ onMounted(() => {
   font-size: 1.8rem;
 }
 
-/* PrimeVue Input Fields (InputText, Calendar, Dropdown, Textarea) */
 .p-field {
   margin-bottom: 1.5rem;
 }
@@ -283,15 +277,15 @@ onMounted(() => {
   padding: 0.75rem 1rem;
   font-size: 0.95rem;
   transition: all 0.2s ease-in-out;
-  width: 100%; /* Ensure full width */
+  width: 100%; 
 }
 
 .p-inputtext:focus,
 .p-dropdown:not(.p-disabled).p-focus,
 .p-calendar.p-focus .p-inputtext,
 .p-textarea:focus {
-  border-color: #2196F3; /* Blue focus border */
-  box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25); /* Blue focus shadow */
+  border-color: #2196F3; 
+  box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25); 
   outline: none;
 }
 
@@ -300,11 +294,10 @@ onMounted(() => {
   font-size: 0.9rem;
 }
 
-/* Calendar component specific adjustments */
 .p-calendar .p-button {
   background-color: transparent !important;
   border: none !important;
-  color: #2196F3 !important; /* Icon color */
+  color: #2196F3 !important; 
   transition: none;
 }
 
@@ -312,15 +305,13 @@ onMounted(() => {
   background-color: rgba(33, 150, 243, 0.1) !important;
 }
 
-/* Dropdown component specific adjustments */
 .p-dropdown .p-dropdown-label {
   padding: 0.75rem 1rem;
 }
 .p-dropdown .p-dropdown-trigger {
-  width: 2.5rem; /* Standard trigger width */
+  width: 2.5rem; 
 }
 
-/* PrimeVue Button Adjustments */
 .p-button.p-button-md {
   padding: 0.7rem 1.4rem;
   font-size: 0.95rem;
@@ -332,7 +323,7 @@ onMounted(() => {
 }
 
 .custom-submit-btn {
-  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%) !important; /* Blue gradient for submit */
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%) !important;
   border: none !important;
 }
 
@@ -353,7 +344,6 @@ onMounted(() => {
   box-shadow: 0 3px 8px rgba(108, 117, 125, 0.25);
 }
 
-/* PrimeVue Message Component */
 .p-message {
   border-radius: 8px;
   padding: 0.8rem 1.2rem;
@@ -378,18 +368,15 @@ onMounted(() => {
   margin-right: 0.6rem;
 }
 
-/* General typography adjustments */
 .p-formtext {
   font-size: 0.8rem;
   color: #888;
 }
 
-/* Icons within labels */
 .p-label .pi {
-  color: #2196F3; /* Blue icons for labels */
+  color: #2196F3; 
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .return-book-container {
     padding: 1rem;

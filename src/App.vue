@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-// No need to import components directly here anymore
 </script>
 
 <style>
